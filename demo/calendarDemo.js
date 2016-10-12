@@ -10,12 +10,12 @@ calendarDemoApp.controller('CalendarCtrl',
     var m = date.getMonth();
     var y = date.getFullYear();
 
-    $scope.changeTo = 'Hungarian';
+    $scope.changeTo = '日本語';
     /* event source that pulls from google.com */
     $scope.eventSource = {
-            url: "http://www.google.com/calendar/feeds/usa__en%40holiday.calendar.google.com/public/basic",
+            url: "",
             className: 'gcal-event',           // an option!
-            currentTimezone: 'America/Chicago' // an option!
+            currentTimezone: 'Asia/Tokyo' // an option!
     };
     /* event source that contains custom events on the scope */
     $scope.events = [
@@ -103,33 +103,42 @@ calendarDemoApp.controller('CalendarCtrl',
     /* config object */
     $scope.uiConfig = {
       calendar:{
-        height: 450,
+        height: 600,
         editable: true,
+        defaultView: 'agendaWeek',
         header:{
           left: 'title',
-          center: '',
-          right: 'today prev,next'
+          center: 'agendaDay,agendaWeek,month',
+          right: 'today prev,next '
         },
         eventClick: $scope.alertOnEventClick,
         eventDrop: $scope.alertOnDrop,
         eventResize: $scope.alertOnResize,
-        eventRender: $scope.eventRender
+        eventRender: $scope.eventRender,
+        monthYearFormat: 'YYYY年MM月'
       }
     };
 
     $scope.changeLang = function() {
-      if($scope.changeTo === 'Hungarian'){
-        $scope.uiConfig.calendar.dayNames = ["Vasárnap", "Hétfő", "Kedd", "Szerda", "Csütörtök", "Péntek", "Szombat"];
-        $scope.uiConfig.calendar.dayNamesShort = ["Vas", "Hét", "Kedd", "Sze", "Csüt", "Pén", "Szo"];
+      if($scope.changeTo === '日本語'){
+        $scope.uiConfig.calendar.dayNames = ["日曜日", "月曜日", "火曜日", "水曜日", "木曜日", "金曜日", "土曜日"];
+        $scope.uiConfig.calendar.dayNamesShort = ["日", "月", "火", "水", "木", "金", "土"];
         $scope.changeTo= 'English';
       } else {
         $scope.uiConfig.calendar.dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
         $scope.uiConfig.calendar.dayNamesShort = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+        $scope.changeTo = '日本語';
+      }
+      /*
+      else {
+        $scope.uiConfig.calendar.dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        $scope.uiConfig.calendar.dayNamesShort = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
         $scope.changeTo = 'Hungarian';
       }
+      */
     };
     /* event sources array*/
     $scope.eventSources = [$scope.events, $scope.eventSource, $scope.eventsF];
-    $scope.eventSources2 = [$scope.calEventsExt, $scope.eventsF, $scope.events];
+    //$scope.eventSources2 = [$scope.calEventsExt, $scope.eventsF, $scope.events];
 });
 /* EOF */
